@@ -1,0 +1,8 @@
+---
+applications:
+- name: freelancalot
+  memory: 512M
+  instances: 1
+  buildpack: https://github.com/jthomas/nodejs-v4-buildpack.git
+  services:
+  - myClearDB
