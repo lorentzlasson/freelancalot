@@ -1,14 +1,19 @@
 {
-  "name": "freelancalot",
-  "version": "0.0.1",
-  "description": "freelancing collaboration tool",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "freelancing"
-  ],
-  "author": "Lorentz Lasson",
-  "license": "MIT"
+    "name": "freelancalot",
+    "version": "0.0.1",
+    "description": "freelancing collaboration tool",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "freelancing"
+    ],
+    "author": "Lorentz Lasson",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.13.3",
+        "util": "^0.10.3"
+    }
 }
