@@ -6,6 +6,13 @@ app.factory('ApiV1Service', ($http) => {
 				return response;
 			});
 			return promise;
+		},
+
+		getUser: () => {
+			var promise = $http.get(root+'/user').then((response)=>{
+				return response;
+			});
+			return promise;
 		}
 	}
 });
