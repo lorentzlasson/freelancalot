@@ -6,6 +6,12 @@ app.config(($stateProvider, $urlRouterProvider) => {
 
     $stateProvider
         .state('out', {
+            url: '',
+            templateUrl: "views/out.html",
+            controller: 'OutCtrl',
+            redirectTo: 'out.login'
+        })
+        .state('out.login', {
             url: "/login",
             templateUrl: "views/login.html",
             controller: 'LoginCtrl'
