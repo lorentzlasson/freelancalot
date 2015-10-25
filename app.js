@@ -24,9 +24,6 @@ orm.setup("./models", dbCreds.name, dbCreds.username, dbCreds.password, {
 
 var User = orm.model("user");
 
-var googleOAuth = appEnv.getService('googleOAuth'),
-    googleOAuthCreds = googleOAuth.credentials;
-
 require('./authentication')(app, url, appEnv, User)
 
 var ensureAuthenticated = (req, res, next) => {
