@@ -28,7 +28,7 @@ app.config(($stateProvider, $urlRouterProvider) => {
             redirectTo: 'in.main'
         })
         .state('in.main', {
-            url: '',
+            url: '/main',
             templateUrl: 'views/main.html',
             controller: 'MainCtrl'
         })
