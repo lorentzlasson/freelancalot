@@ -24,4 +24,8 @@ app.config(($stateProvider, $urlRouterProvider) => {
             templateUrl: "views/extra.html",
             controller: 'ExtraCtrl'
         })
-})
+});
+
+app.config(($httpProvider) => {
+    $httpProvider.interceptors.push('RespErrInjector');
+});
