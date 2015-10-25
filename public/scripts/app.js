@@ -12,7 +12,7 @@ app.config(($stateProvider, $urlRouterProvider) => {
         })
         .state('in', {
             url: '',
-            templateUrl: "views/master.html",
+            templateUrl: "views/in.html",
             redirectTo: 'in.main'
         })
         .state('in.main', {
