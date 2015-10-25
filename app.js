@@ -30,7 +30,7 @@ var ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.send("not logged in");
+    res.sendStatus(403);
 }
 
 app.use('/', express.static(__dirname + '/public'));
