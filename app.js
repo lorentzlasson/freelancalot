@@ -19,7 +19,10 @@ var dbService = appEnv.getService('myClearDB'),
 orm.setup("./models", dbCreds.name, dbCreds.username, dbCreds.password, {
     host: dbCreds.hostname,
     dialect: 'mysql',
-    port: dbCreds.port
+    port: dbCreds.port,
+    pool: {
+        max: 2
+    }
 });
 
 var User = orm.model("user");
