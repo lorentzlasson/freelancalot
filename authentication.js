@@ -16,14 +16,14 @@ module.exports = (app, url, appEnv, User) => {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser((user, done) => {
         var id = user.get('id');
         console.log('serializeUser: ' + id)
         done(null, id);
     });
 
-    passport.deserializeUser(function(id, done) {
-        User.findById(id).then(function(user) {
+    passport.deserializeUser((id, done) => {
+        User.findById(id).then((user) => {
             done(null, user);
         })
     });
@@ -36,8 +36,8 @@ module.exports = (app, url, appEnv, User) => {
             clientSecret: googleOAuthCreds.clientSecret,
             callbackURL: util.format("http://%s%s", url, googleOAuthCreds.callbackPath)
         },
-        function(token, refreshToken, profile, done) {
-            process.nextTick(function() {
+        (token, refreshToken, profile, done) => {
+            process.nextTick(() => {
                 User.findOrCreate({
                         where: {
                             googleId: profile.id
@@ -47,7 +47,7 @@ module.exports = (app, url, appEnv, User) => {
                             email: profile.emails[0].value
                         }
                     })
-                    .spread(function(user, created) {
+                    .spread((user, created) => {
                         done(null, user);
                     })
             });
@@ -62,7 +62,7 @@ module.exports = (app, url, appEnv, User) => {
             successRedirect: '/'
         }));
 
-    app.get('/logout', function(req, res) {
+    app.get('/logout', (req, res) => {
         req.logout();
         res.redirect('/');
     });
