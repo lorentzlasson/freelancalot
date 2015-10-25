@@ -27,7 +27,7 @@ orm.setup("./models", dbCreds.name, dbCreds.username, dbCreds.password, {
 
 var User = orm.model("user");
 
-require('./authentication')(app, url, appEnv, User)
+require('./auth')(app, url, appEnv, User)
 
 var ensureAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
