@@ -12,10 +12,11 @@ app.config(($stateProvider, $urlRouterProvider) => {
         })
         .state('in', {
             url: '',
-            templateUrl: "views/master.html"
+            templateUrl: "views/master.html",
+            redirectTo: 'in.main'
         })
         .state('in.main', {
-            url: "/main",
+            url: '',
             templateUrl: "views/main.html",
             controller: 'MainCtrl'
         })
@@ -28,4 +29,14 @@ app.config(($stateProvider, $urlRouterProvider) => {
 
 app.config(($httpProvider) => {
     $httpProvider.interceptors.push('RespErrInjector');
+});
+
+// enable "redirectTo" attribute in $stateProvider.state to acheive defaul child state
+app.run(($rootScope, $state) => {
+    $rootScope.$on('$stateChangeStart', function(evt, to, params) {
+        if (to.redirectTo) {
+            evt.preventDefault();
+            $state.go(to.redirectTo, params)
+        }
+    });
 });
