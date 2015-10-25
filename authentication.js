@@ -59,12 +59,11 @@ module.exports = (app, url, appEnv, User) => {
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: '/',
-            failureRedirect: '/login'
+            successRedirect: '/'
         }));
 
     app.get('/logout', function(req, res) {
         req.logout();
-        res.redirect('/login');
+        res.redirect('/');
     });
 }
