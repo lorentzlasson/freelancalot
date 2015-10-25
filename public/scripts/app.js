@@ -2,33 +2,33 @@ var app = angular.module('myApp', ['ui.router']);
 
 app.config(($stateProvider, $urlRouterProvider) => {
 
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise('/');
 
     $stateProvider
         .state('out', {
             url: '',
-            templateUrl: "views/out.html",
+            templateUrl: 'views/out.html',
             controller: 'OutCtrl',
             redirectTo: 'out.login'
         })
         .state('out.login', {
-            url: "/login",
-            templateUrl: "views/login.html",
+            url: '/login',
+            templateUrl: 'views/login.html',
             controller: 'LoginCtrl'
         })
         .state('in', {
             url: '',
-            templateUrl: "views/in.html",
+            templateUrl: 'views/in.html',
             redirectTo: 'in.main'
         })
         .state('in.main', {
             url: '',
-            templateUrl: "views/main.html",
+            templateUrl: 'views/main.html',
             controller: 'MainCtrl'
         })
         .state('in.extra', {
-            url: "/extra",
-            templateUrl: "views/extra.html",
+            url: '/extra',
+            templateUrl: 'views/extra.html',
             controller: 'ExtraCtrl'
         })
 });
