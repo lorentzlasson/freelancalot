@@ -1,3 +1,3 @@
-app.controller('MasterCtrl', function($scope){
+app.controller('InCtrl', function($scope){
 
 });
