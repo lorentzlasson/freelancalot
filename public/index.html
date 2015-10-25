@@ -2,10 +2,25 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 
-<body>
-    <a href="/auth/google">Google login</a>
+<body ng-app="myApp">
+
+    <a ui-sref="out">Outside</a>
+    <a ui-sref="in">Inside</a>
+    <div ui-view></div>
+
+    <!-- CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+
+    <!-- Angular -->
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/controllers/master.js"></script>
+    <script src="/scripts/controllers/main.js"></script>
+    <script src="/scripts/controllers/login.js"></script>
+    <script src="/scripts/controllers/extra.js"></script>
 </body>
 
 </html>
