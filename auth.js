@@ -28,6 +28,7 @@ module.exports = (app, url, appEnv, User) => {
         })
     });
 
+    // ----- Google -----
     var googleOAuth = appEnv.getService('googleOAuth'),
         googleOAuthCreds = googleOAuth.credentials;
 
