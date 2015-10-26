@@ -6,13 +6,13 @@ router.get('/hello', (req, res) => {
 });
 
 router.get('/user', (req, res) => {
-	var user = req.user;
+    var user = req.user;
     res.send(user);
 });
 
 router.get('/user/photo', (req, res) => {
-	var user = req.user;
-	var photo = user.get('photo');
+    var user = req.user;
+    var photo = user.get('photo');
     res.send(photo);
 });
 
