@@ -2,6 +2,7 @@ var util = require('util');
 var session = require('express-session');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 
 module.exports = (app, url, appEnv, User) => {
 
@@ -64,6 +65,55 @@ module.exports = (app, url, appEnv, User) => {
             successRedirect: '/'
         }));
 
+    // ----- Local -----
+    app.post('/register', (req, res) => {
+        var credentials = req.body;
+        User.findOrCreate({
+                where: {
+                    email: credentials.username
+                },
+                defaults: {
+                    password: credentials.password
+                }
+            })
+            .spread((user, created) => {
+                if (!created) {
+                    return res.status(400).send({
+                        message: 'Username taken'
+                    });
+                };
+                return res.send(user);
+            })
+    })
+
+    passport.use('login', new LocalStrategy({
+            passReqToCallback: true
+        },
+        (req, username, password, done) => {
+            User.findOne({
+                where: {
+                    email: username
+                }
+            }).then((user) => {
+                if (!user) {
+                    return done(null, false, { message: 'Invalid user' });
+                }
+
+                if(!user.validPassword(password)) {
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+                return done(null, user);
+
+            }, (error) => {
+                return done(error, null);
+            })
+        }));
+
+    app.post('/login', passport.authenticate('login', {
+        successRedirect: '/'
+    }));
+
+    // ----- Logout -----
     app.get('/logout', (req, res) => {
         req.logout();
         res.redirect('/');
