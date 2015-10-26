@@ -13,6 +13,13 @@ app.factory('ApiV1Service', ($http) => {
 				return response;
 			});
 			return promise;
+		},
+
+		getUserPhoto: () => {
+			var promise = $http.get(root+'/user/photo').then((response)=>{
+				return response;
+			});
+			return promise;
 		}
 	}
 });

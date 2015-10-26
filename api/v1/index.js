@@ -10,4 +10,10 @@ router.get('/user', (req, res) => {
     res.send(user);
 });
 
+router.get('/user/photo', (req, res) => {
+	var user = req.user;
+	var photo = user.get('photo');
+    res.send(photo);
+});
+
 module.exports = router;
