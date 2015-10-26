@@ -1,7 +1,7 @@
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var util = require('util');
 var session = require('express-session');
 var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 module.exports = (app, url, appEnv, User) => {
 
