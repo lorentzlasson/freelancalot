@@ -44,7 +44,8 @@ module.exports = (app, url, appEnv, User) => {
                         },
                         defaults: {
                             name: profile.displayName,
-                            email: profile.emails[0].value
+                            email: profile.emails[0].value,
+                            photo: profile.photos[0].value
                         }
                     })
                     .spread((user, created) => {
