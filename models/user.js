@@ -11,6 +11,7 @@ module.exports = {
         },
         email: Seq.STRING,
         googleId: Seq.STRING,
+        photo: Seq.STRING
     },
 
     options: {
