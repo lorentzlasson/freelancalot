@@ -12,6 +12,10 @@
     ],
     "author": "Lorentz Lasson",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lorentzlasson/freelancalot.git"
+    },
     "dependencies": {
         "body-parser": "^1.14.1",
         "cfenv": "^1.0.3",
