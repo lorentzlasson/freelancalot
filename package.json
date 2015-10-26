@@ -17,6 +17,7 @@
     "url": "https://github.com/lorentzlasson/freelancalot.git"
   },
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.1",
     "cfenv": "^1.0.3",
     "express": "^4.13.3",
@@ -24,6 +25,7 @@
     "mysql": "^2.9.0",
     "passport": "^0.3.0",
     "passport-google-oauth": "^0.2.0",
+    "passport-local": "^1.0.0",
     "sequelize": "^3.12.2",
     "util": "^0.10.3"
   }

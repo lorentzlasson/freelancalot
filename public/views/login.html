@@ -1,1 +1,10 @@
+<b>Login</b>
+<br>
 <a href="/auth/google">Google login</a>
+<br>
+<form ng-submit="login(credentials)" method="post">
+    <input ng-model="credentials.username" type="text" placeholder="username">
+    <input ng-model="credentials.password" type="password" placeholder="password">
+    <br>
+    <input type="submit" value="Log in" />
+</form>
