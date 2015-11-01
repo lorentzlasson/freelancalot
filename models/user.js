@@ -10,7 +10,11 @@ module.exports = {
         email: Seq.STRING,
         password: Seq.STRING,
         googleId: Seq.STRING,
-        photo: Seq.STRING
+        photo: Seq.STRING,
+        permission: {
+            type: Seq.STRING,
+            defaultValue: 'admin'
+        }
     },
 
     options: {
