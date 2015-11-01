@@ -109,11 +109,22 @@ module.exports = (app, url, appEnv, User) => {
             })
         }));
 
-    app.post('/login', passport.authenticate('login', {
-        successRedirect: '/'
-    }));
+    var getUser = (req, res) => {
+        var user = req.user;
+        if (user) {
+            return res.send({
+                id: user.id,
+                permission: user.permission
+            });
+        };
+        res.end();
+    }
 
-    // ----- Logout -----
+    app.post('/login', passport.authenticate('login'), getUser);
+
+    app.get('/user', getUser);
+
+    // ----- Other -----
     app.get('/logout', (req, res) => {
         req.logout();
         res.redirect('/');
