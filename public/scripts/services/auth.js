@@ -13,7 +13,10 @@ app.factory('AuthService', ($http) => {
         },
 
         register: (credentials) => {
-            return $http.post(root + '/register', credentials);
+            return $http.post(root + '/register', credentials).then((response) => {
+                currentUser = response.data;
+                return response;
+            });
         },
 
         authorized: (permission) => {

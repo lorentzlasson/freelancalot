@@ -67,7 +67,18 @@ module.exports = (app, url, appEnv, User) => {
         }));
 
     // ----- Local -----
-    app.post('/register', (req, res) => {
+    var getUser = (req, res) => {
+        var user = req.user;
+        if (user) {
+            return res.send({
+                id: user.id,
+                permission: user.permission
+            });
+        };
+        res.end();
+    }
+
+    app.post('/register', (req, res, next) => {
         var credentials = req.body;
         if (!validator.isEmail(credentials.username)) {
             return res.status(400).send({
@@ -88,9 +99,17 @@ module.exports = (app, url, appEnv, User) => {
                         message: 'Username taken'
                     });
                 };
-                return res.send(user);
+                req.login(user, (err) => {
+                    if (err) {
+                        return res.status(400).send({
+                            message: 'User created but could not log in',
+                            err: err
+                        });
+                    };
+                    return next();
+                })
             })
-    })
+    }, getUser);
 
     passport.use('login', new LocalStrategy({
             passReqToCallback: true
@@ -114,17 +133,6 @@ module.exports = (app, url, appEnv, User) => {
                 return done(error, null);
             })
         }));
-
-    var getUser = (req, res) => {
-        var user = req.user;
-        if (user) {
-            return res.send({
-                id: user.id,
-                permission: user.permission
-            });
-        };
-        res.end();
-    }
 
     app.post('/login', passport.authenticate('login'), getUser);
 
