@@ -27,6 +27,7 @@
     "passport-google-oauth": "^0.2.0",
     "passport-local": "^1.0.0",
     "sequelize": "^3.12.2",
-    "util": "^0.10.3"
+    "util": "^0.10.3",
+    "validator": "^4.2.1"
   }
 }

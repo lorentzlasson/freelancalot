@@ -3,6 +3,7 @@ var session = require('express-session');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var LocalStrategy = require('passport-local').Strategy;
+var validator = require('validator');
 
 module.exports = (app, url, appEnv, User) => {
 
@@ -68,6 +69,11 @@ module.exports = (app, url, appEnv, User) => {
     // ----- Local -----
     app.post('/register', (req, res) => {
         var credentials = req.body;
+        if (!validator.isEmail(credentials.username)) {
+            return res.status(400).send({
+                message: 'Username is not a valid email'
+            })
+        }
         User.findOrCreate({
                 where: {
                     email: credentials.username
