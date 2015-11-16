@@ -1,52 +1,14 @@
 var util = require('util');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+var jwt = require('jsonwebtoken');
 var validator = require('validator');
 
 module.exports = (app, url, appEnv, User) => {
 
-    app.use(session({
-        secret: process.env.SESSION_SECRET,
-        name: 'freelancalot',
-        proxy: true,
-        resave: true,
-        saveUninitialized: true
-    }));
-
-    app.use(passport.initialize());
-    app.use(passport.session());
-
-    passport.serializeUser((user, done) => {
-        var id = user.get('id');
-        console.log('serializeUser: ' + id)
-        done(null, id);
-    });
-
-    passport.deserializeUser((id, done) => {
-        User.findById(id).then((user) => {
-            done(null, user);
-        })
-    });
-
     // ----- Local -----
-    var getUser = (req, res) => {
-        var user = req.user;
-        if (user) {
-            return res.send({
-                id: user.id,
-                permission: user.permission
-            });
-        };
-        res.end();
-    }
-
     app.post('/register', (req, res, next) => {
         var credentials = req.body;
         if (!validator.isEmail(credentials.username)) {
-            return res.status(400).send({
-                message: 'Username is not a valid email'
-            })
+            return res.status(400).send('username is not a valid email address');
         }
         User.findOrCreate({
                 where: {
@@ -58,52 +20,59 @@ module.exports = (app, url, appEnv, User) => {
             })
             .spread((user, created) => {
                 if (!created) {
-                    return res.status(400).send({
-                        message: 'Username taken'
-                    });
+                    return res.status(400).send('username taken');
                 };
-                req.login(user, (err) => {
-                    if (err) {
-                        return res.status(400).send({
-                            message: 'User created but could not log in',
-                            err: err
-                        });
-                    };
-                    return next();
-                })
+
+                return res.end();
             })
-    }, getUser);
-
-    passport.use('login', new LocalStrategy({
-            passReqToCallback: true
-        },
-        (req, username, password, done) => {
-            User.findOne({
-                where: {
-                    email: username
-                }
-            }).then((user) => {
-                if (!user) {
-                    return done(null, false, { message: 'Invalid user' });
-                }
-
-                if(!user.validPassword(password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
-                }
-                return done(null, user);
-
-            }, (error) => {
-                return done(error, null);
-            })
-        }));
-
-    app.post('/login', passport.authenticate('login'), getUser);
-
-    app.get('/user', getUser);
-
-    // ----- Other -----
-    app.get('/logout', (req, res) => {
-        req.logout();
-        res.redirect('/');
     });
+
+    app.post('/login', (req, res, next) => {
+        var credentials = req.body,
+            username = credentials.username,
+            password = credentials.password;
+
+        User.findOne({
+            where: {
+                email: username
+            }
+        }).then((user) => {
+            if (!user) {
+                return res.status(401).send('username does not exist');
+            }
+
+            if (!user.validPassword(password)) {
+                return res.status(401).send('incorrect password');
+            }
+
+            var token = jwt.sign(user.email, process.env.API_SECRET, {
+                expiresInMinutes: 1440
+            });
+
+            return res.send({
+                token: token
+            });
+
+        }, (error) => {
+            return res.sendStatus(500);
+        })
+    });
+
+    return (req, res, next) => {
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+        if (token) {
+            jwt.verify(token, process.env.API_SECRET, function(err, decoded) {
+                if (err) {
+                    return res.status(403).send('failed to authenticate token');
+                } else {
+                    req.decoded = decoded;
+                    next();
+                }
+            });
+
+        } else {
+            return res.status(403).send('no token provided');
+        }
+    }
 }

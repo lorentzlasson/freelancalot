@@ -25,10 +25,7 @@ app.config(($stateProvider, $urlRouterProvider) => {
             url: '',
             templateUrl: 'views/in.html',
             controller: 'InCtrl',
-            redirectTo: 'in.main',
-            data: {
-                permission: 'authenticated'
-            }
+            redirectTo: 'in.main'
         })
         .state('in.main', {
             url: '/main',
@@ -38,10 +35,7 @@ app.config(($stateProvider, $urlRouterProvider) => {
         .state('in.extra', {
             url: '/extra',
             templateUrl: 'views/extra.html',
-            controller: 'ExtraCtrl',
-            data: {
-                permission: 'admin'
-            }
+            controller: 'ExtraCtrl'
         })
 });
 
@@ -49,27 +43,13 @@ app.config(($httpProvider) => {
     $httpProvider.interceptors.push('RespErrInjector');
 });
 
-app.run((AuthService) => {
-    AuthService.loadCurrentUser();
-});
-
 // enable "redirectTo" attribute in $stateProvider.state to acheive defaul child state
 // change to better solution when available (see: https://github.com/angular-ui/ui-router/issues/27)
-app.run(($rootScope, $state, AuthService) => {
+app.run(($rootScope, $state) => {
     $rootScope.$on('$stateChangeStart', function(evt, to, toParams, from, fromParams) {
         if (to.redirectTo) {
             evt.preventDefault();
             $state.go(to.redirectTo, toParams);
         }
-
-        else if (to.data) {
-            var permission = to.data.permission;
-            if (permission){
-                var authorized = AuthService.authorized(permission);
-                if (!authorized) {
-                    evt.preventDefault();
-                };
-            }
-        };
     });
 });

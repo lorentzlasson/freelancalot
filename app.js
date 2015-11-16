@@ -27,14 +27,7 @@ orm.setup("./models", dbCreds.name, dbCreds.username, dbCreds.password, {
 
 var User = orm.model("user");
 
-require('./auth')(app, url, appEnv, User)
-
-var ensureAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.sendStatus(403);
-}
+var ensureAuthenticated = require('./auth')(app, url, appEnv, User)
 
 app.use('/', express.static(__dirname + '/public'));
 var v1router = require('./api/v1');
