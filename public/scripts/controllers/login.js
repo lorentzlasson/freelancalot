@@ -1,7 +1,7 @@
-app.controller('LoginCtrl', function($scope, AuthService) {
+app.controller('LoginCtrl', function($scope, Auth) {
 
     $scope.login = (credentials) => {
-        AuthService.login(credentials).then((response) => {
+        Auth.login(credentials).then((response) => {
             $scope.data = response;
         });
     }
