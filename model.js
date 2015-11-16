@@ -41,11 +41,18 @@ var singleton = function singleton() {
         sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
             .then(function() {
                 return sequelize.sync({
-                    force: false
+                    force: true
                 });
             })
             .then(function() {
                 return sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
+            })
+            .then(function() {
+                var User = singleton.getInstance().model("user");
+                User.create({
+                    email: "a@b.com",
+                    password: "qwe"
+                });
             })
             .then(function() {
                 console.log('Database synchronised.');
