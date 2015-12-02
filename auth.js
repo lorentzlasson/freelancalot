@@ -45,7 +45,7 @@ module.exports = (app, url, appEnv, User) => {
                 return res.status(401).send('incorrect password');
             }
 
-            var token = jwt.sign(user.email, process.env.API_SECRET, {
+            var token = jwt.sign(user.email, process.env.JWT_SECRET, {
                 expiresInMinutes: 1440
             });
 
@@ -62,7 +62,7 @@ module.exports = (app, url, appEnv, User) => {
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
         if (token) {
-            jwt.verify(token, process.env.API_SECRET, function(err, decoded) {
+            jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
                 if (err) {
                     return res.status(403).send('failed to authenticate token');
                 } else {
