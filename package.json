@@ -26,5 +26,9 @@
     "sequelize": "^3.12.2",
     "util": "^0.10.3",
     "validator": "^4.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^1.10.3",
+    "eslint-config-google": "^0.3.0"
   }
 }
