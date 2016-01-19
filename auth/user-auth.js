@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken')
 var validator = require('validator')
 
-module.exports = (app, url, appEnv, User) => {
+module.exports = (app, User) => {
 
 	// ----- Local -----
 	app.post('/register', (req, res) => {
@@ -57,22 +57,4 @@ module.exports = (app, url, appEnv, User) => {
 			return res.sendStatus(500)
 		})
 	})
-
-	return (req, res, next) => {
-		var token = req.body.token || req.query.token || req.headers['x-access-token']
-
-		if (token) {
-			jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
-				if (err) {
-					return res.status(403).send('failed to authenticate token')
-				} else {
-					req.decoded = decoded
-					next()
-				}
-			})
-
-		} else {
-			return res.status(403).send('no token provided')
-		}
-	}
 }
