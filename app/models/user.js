@@ -1,7 +1,7 @@
 //Getting the orm instance
 var orm = require('../orm'),
-	Seq = orm.Seq()
-var bcrypt = require('bcrypt-nodejs')
+	Seq = orm.Seq(),
+	bcrypt = require('bcrypt-nodejs')
 
 //Creating our module
 module.exports = {
