@@ -5,15 +5,12 @@ var relationships = {}
 var singleton = function singleton() {
 	var Sequelize = require('sequelize')
 	var sequelize = null
-	var modelsPath = ''
-	this.setup = function(path, database, username, password, obj) {
-		modelsPath = path
-
-		if (arguments.length == 3) {
+	this.setup = function(database, username, password, obj) {
+		if (arguments.length == 2) {
 			sequelize = new Sequelize(database, username)
-		} else if (arguments.length == 4) {
+		} else if (arguments.length == 3) {
 			sequelize = new Sequelize(database, username, password)
-		} else if (arguments.length == 5) {
+		} else if (arguments.length == 4) {
 			sequelize = new Sequelize(database, username, password, obj)
 		}
 		init()
@@ -28,8 +25,9 @@ var singleton = function singleton() {
 	}
 
 	function init() {
-		filesystem.readdirSync(modelsPath).forEach(function(name) {
-			var object = require(modelsPath + '/' + name)
+		var modelFiles = filesystem.readdirSync(__dirname + '/models')
+		modelFiles.forEach(function(name) {
+			var object = require('./models/' + name)
 			var options = object.options || {}
 			var modelName = name.replace(/\.js$/i, '')
 			models[modelName] = sequelize.define(modelName, object.model, options)
