@@ -1,6 +1,6 @@
-var filesystem = require('fs')
-var models = {}
-var relationships = {}
+var filesystem = require('fs'),
+	models = {},
+	relationships = {}
 
 var singleton = function singleton() {
 	var Sequelize = require('sequelize')
@@ -16,17 +16,17 @@ var singleton = function singleton() {
 		init()
 	}
 
-	this.model = function(name) {
+	this.model = (name) => {
 		return models[name]
 	}
 
-	this.Seq = function() {
+	this.Seq = () => {
 		return Sequelize
 	}
 
-	function init() {
+	var init = () => {
 		var modelFiles = filesystem.readdirSync(__dirname + '/models')
-		modelFiles.forEach(function(name) {
+		modelFiles.forEach((name) => {
 			var object = require('./models/' + name)
 			var options = object.options || {}
 			var modelName = name.replace(/\.js$/i, '')
@@ -37,24 +37,24 @@ var singleton = function singleton() {
 		})
 
 		sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
-		.then(function() {
+		.then(() => {
 			return sequelize.sync({
 				force: true
 			})
 		})
-		.then(function() {
+		.then(() => {
 			return sequelize.query('SET FOREIGN_KEY_CHECKS = 1')
 		})
-		.then(function() {
+		.then(() => {
 			var User = singleton.getInstance().model('user')
 			User.create({
 				email: 'a@b.com',
 				password: 'qwe'
 			})
 		})
-		.then(function() {
+		.then(() => {
 			console.log('Database synchronised.')
-		}, function(err) {
+		}, (err) => {
 			console.log(err)
 		})
 

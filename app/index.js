@@ -1,11 +1,11 @@
 var express = require('express'),
-	app = express()
-var orm = require('./orm')
-var cfenv = require('cfenv'),
-	appEnv = cfenv.getAppEnv()
-var auth = require('./auth')
+	app = express(),
+	orm = require('./orm'),
+	cfenv = require('cfenv'),
+	appEnv = cfenv.getAppEnv(),
+	auth = require('./auth'),
+	bodyParser = require('body-parser')
 
-var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
 var dbService = appEnv.getService('myClearDB'),

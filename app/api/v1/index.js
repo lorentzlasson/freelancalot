@@ -1,7 +1,6 @@
 var express = require('express'),
-	router = express.Router()
-
-var orm = require('../../orm'),
+	router = express.Router(),
+	orm = require('../../orm'),
 	User = orm.model('user')
 
 router.get('/hello', (req, res) => {
