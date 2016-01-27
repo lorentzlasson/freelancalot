@@ -1,5 +1,5 @@
 //Getting the orm instance
-var orm = require('../model'),
+var orm = require('../orm'),
 	Seq = orm.Seq()
 var bcrypt = require('bcrypt-nodejs')
 
