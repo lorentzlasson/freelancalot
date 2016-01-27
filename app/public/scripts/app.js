@@ -44,11 +44,12 @@ app.config(($httpProvider) => {
 });
 
 // enable "redirectTo" attribute in $stateProvider.state to acheive defaul child state
+// change to better solution when available (see: https://github.com/angular-ui/ui-router/issues/27)
 app.run(($rootScope, $state) => {
-    $rootScope.$on('$stateChangeStart', function(evt, to, params) {
+    $rootScope.$on('$stateChangeStart', function(evt, to, toParams, from, fromParams) {
         if (to.redirectTo) {
             evt.preventDefault();
-            $state.go(to.redirectTo, params)
+            $state.go(to.redirectTo, toParams);
         }
     });
 });

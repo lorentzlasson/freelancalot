@@ -1,4 +1,4 @@
-app.factory('ApiV1Service', ($http) => {
+app.factory('ApiV1Service', ($http, Auth) => {
 	var root = '/api/v1';
 	return {
 		getHello: () => {
@@ -9,7 +9,8 @@ app.factory('ApiV1Service', ($http) => {
 		},
 
 		getUser: () => {
-			var promise = $http.get(root+'/user').then((response)=>{
+			var token = Auth.token();
+			var promise = $http.get(root+'/user?token='+token).then((response)=>{
 				return response;
 			});
 			return promise;
