@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test"
   },
   "keywords": [
     "freelancing"
@@ -28,6 +28,8 @@
     "validator": "^4.2.1"
   },
   "devDependencies": {
-    "eslint": "^1.10.3"
+    "eslint": "^1.10.3",
+    "supertest": "^1.1.0",
+    "tape": "^4.4.0"
   }
 }
