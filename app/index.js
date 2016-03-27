@@ -1,13 +1,16 @@
-var express = require('express'),
-	app = express(),
-	auth = require('./auth'),
-	bodyParser = require('body-parser')
+let debug = require('debug')('freelancalot')
+let cfenv = require('cfenv')
+let appEnv = cfenv.getAppEnv()
 
-app.use(bodyParser.json())
-
-app.use(auth.router)
-app.use('/', express.static(__dirname + '/public'))
-var v1router = require('./api/v1')
-app.use('/api/v1/', auth.ensureAuthenticated, v1router)
-
-module.exports = app
+require('./database')
+.then(() => {
+	debug('database initialized')
+	return require('./server')
+})
+.then(server => {
+	server.listen(appEnv.port)
+	debug('server running on %s', appEnv.url)
+})
+.catch(err => {
+	debug('error during startup: ', err)
+})
