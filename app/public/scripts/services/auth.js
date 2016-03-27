@@ -1,23 +1,14 @@
 app.factory('Auth', ($http) => {
-    var root = '';
-    var token;
+	this.token
+	
+	return {
+		getToken: () => {
+			if(!this.token) throw new Error('no token')
+			return this.token
+		},
 
-    return {
-        login: (credentials) => {
-            return $http.post(root + '/login', credentials).then((response) => {
-                token = response.data.token;
-                return response;
-            });
-        },
-
-        register: (credentials) => {
-            return $http.post(root + '/register', credentials).then((response) => {
-                return response;
-            });
-        },
-
-        token: () => {
-            return token;
-        }
-    }
-});
+		setToken: token => {
+			this.token = token
+		}
+	}
+})

@@ -1,8 +1,11 @@
-app.controller('LoginCtrl', function($scope, Auth) {
-
-    $scope.login = (credentials) => {
-        Auth.login(credentials).then((response) => {
-            $scope.data = response;
-        });
-    }
-});
+app.controller('LoginCtrl', ($scope, UserService) => {
+	$scope.login = credentials => {
+		UserService.login(credentials)
+		.then(response => {
+			$scope.data = response
+		})
+		.catch(err => {
+			console.error(err.data)
+		})
+	}
+})

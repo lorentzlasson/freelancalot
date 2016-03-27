@@ -1,3 +1,3 @@
-app.controller('OutCtrl', function($scope){
+app.controller('OutCtrl', ($scope) => {
 
-});
+})
