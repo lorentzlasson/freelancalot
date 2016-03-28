@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "supertest": "^1.1.0",
-    "tape": "^4.4.0"
+    "tape": "^4.4.0",
+    "webdriverio": "^4.0.5"
   }
 }
