@@ -1,8 +1,8 @@
 <b>Login</b>
 <br>
 <form ng-submit="login(credentials)" method="post">
-    <input ng-model="credentials.username" type="text" placeholder="username">
-    <input ng-model="credentials.password" type="password" placeholder="password">
+    <input id="username" ng-model="credentials.username" type="text" placeholder="username">
+	<input id="password" ng-model="credentials.password" type="password" placeholder="password">
     <br>
-    <input type="submit" value="Log in" />
+    <input id="login-btn" type="submit" value="Log in" />
 </form>
