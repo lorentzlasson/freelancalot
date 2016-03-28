@@ -2,7 +2,7 @@ let test = require('tape')
 let request = require('supertest')
 let server, token, credentials
 
-test('environment variables', t => {
+test('environment', t => {
 	t.ok(process.env.VCAP_SERVICES, 'VCAP_SERVICES')
 	t.ok(process.env.JWT_SECRET, 'JWT_SECRET')
 	credentials = require('./test_user.json')
