@@ -1,5 +1,5 @@
-let test = require('tape')
-let request = require('supertest')
+const test = require('tape')
+const request = require('supertest')
 let server, token, credentials
 
 test('environment', t => {
