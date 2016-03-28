@@ -1,6 +1,6 @@
-let debug = require('debug')('freelancalot')
-let cfenv = require('cfenv')
-let appEnv = cfenv.getAppEnv()
+const debug = require('debug')('freelancalot')
+const cfenv = require('cfenv')
+const appEnv = cfenv.getAppEnv()
 
 require('./database')
 .then(() => {

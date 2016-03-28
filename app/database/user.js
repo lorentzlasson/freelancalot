@@ -1,5 +1,5 @@
-let Sequelize = require('sequelize')
-let bcrypt = require('bcrypt')
+const Sequelize = require('sequelize')
+const bcrypt = require('bcrypt')
 
 module.exports = {
 	model: {
@@ -18,8 +18,8 @@ module.exports = {
 		freezeTableName: true,
 		setterMethods: {
 			password: function(value) {
-				var salt = bcrypt.genSaltSync()
-				let hash = bcrypt.hashSync(value, salt)
+				const salt = bcrypt.genSaltSync()
+				const hash = bcrypt.hashSync(value, salt)
 				this.setDataValue('password', hash)
 			}
 		},

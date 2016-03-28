@@ -1,7 +1,7 @@
-let router = require('express').Router()
-let jwt = require('jsonwebtoken')
-let validator = require('validator')
-let auth = require('../auth')
+const router = require('express').Router()
+const jwt = require('jsonwebtoken')
+const validator = require('validator')
+const auth = require('../auth')
 
 let User
 require('../../database')
@@ -14,7 +14,7 @@ router.get('/hello', auth.ensure, (req, res) => {
 })
 
 router.get('/me', auth.ensure, (req, res) => {
-	let email = req.decoded.email
+	const email = req.decoded.email
 	User.findOne({
 		where: {
 			email: email
@@ -34,7 +34,7 @@ router.get('/me/photo', auth.ensure, (req, res) => {
 // --------- PUBLIC PATHS -----------
 // register new user
 router.post('/', (req, res) => {
-	let credentials = req.body
+	const credentials = req.body
 	if (!validator.isEmail(credentials.username)) {
 		return res.status(400).json({error: 'username is not a valid email address'})
 	}
@@ -56,7 +56,7 @@ router.post('/', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-	let credentials = req.body,
+	const credentials = req.body,
 		username = credentials.username,
 		password = credentials.password
 
@@ -74,7 +74,7 @@ router.post('/login', (req, res) => {
 		}
 
 		if(!process.env.JWT_SECRET) throw new Error('JWT_SECRET is not set')
-		let token = jwt.sign({email: user.email}, process.env.JWT_SECRET)
+		const token = jwt.sign({email: user.email}, process.env.JWT_SECRET)
 
 		return res.json({token})
 
