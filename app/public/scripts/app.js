@@ -5,13 +5,6 @@ app.config(($stateProvider, $urlRouterProvider) => {
 	$urlRouterProvider.otherwise('/')
 
 	$stateProvider
-	.state('logout', {
-		url: '/logout',
-		controller: ($state, Auth) => {
-			Auth.logout()
-			$state.go('out.login')
-		}
-	})
 	.state('out', {
 		url: '',
 		templateUrl: 'views/out.html',

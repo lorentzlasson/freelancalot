@@ -1,3 +1,5 @@
-app.controller('InCtrl', ($scope) => {
-
+app.controller('InCtrl', ($scope, Auth) => {
+	$scope.logout = () => {
+		Auth.logout()
+	}
 })
