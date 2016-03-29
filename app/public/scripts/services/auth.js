@@ -10,6 +10,11 @@ app.factory('Auth', ($http, $window) => {
 		this.token = token
 		$window.localStorage['token'] = token
 	}
+
+	function logout(){
+		this.token = undefined
+		$window.localStorage.removeItem('token')
+	}
 	
 	return {
 		getToken: () => {
@@ -19,6 +24,10 @@ app.factory('Auth', ($http, $window) => {
 
 		setToken: token => {
 			saveToken(token)
+		},
+
+		logout: () => {
+			logout()
 		}
 	}
 })
