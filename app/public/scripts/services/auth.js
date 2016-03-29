@@ -1,17 +1,17 @@
 app.factory('Auth', ($http, $window) => {
 	this.token
 
-	function loadToken(){
+	const loadToken = () => {
 		this.token = $window.localStorage['token']
 		return this.token
 	}
 
-	function saveToken(token){
+	const saveToken = token => {
 		this.token = token
 		$window.localStorage['token'] = token
 	}
 
-	function logout(){
+	const logout = () => {
 		this.token = undefined
 		$window.localStorage.removeItem('token')
 	}
