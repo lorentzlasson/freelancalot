@@ -2,6 +2,7 @@ const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const validator = require('validator')
 const auth = require('../auth')
+const sendgrid = require('../../util/mail')
 
 let User
 require('../../database')
@@ -50,6 +51,14 @@ router.post('/', (req, res) => {
 		if (!created) {
 			return res.status(409).json({error: 'username taken'})
 		}
+
+		sendgrid.sendVerification(user)
+		.then(data => {
+			console.log(data)
+		})
+		.catch(err => {
+			console.log(err)
+		})
 
 		return res.json(user)
 	})
