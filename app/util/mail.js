@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport(options)
 const sendVerification = user => {
 	return new Promise((resolve, reject) => {
 		const mailOptions = {
-			from: mainConfig.email,
+			from: mailConfig.email,
 			to: user.email,
 			subject: 'Account verfication',
 			text: 'Hi! Please verify your account!'
