@@ -2,7 +2,7 @@ const cfenv = require('cfenv')
 const appEnv = cfenv.getAppEnv()
 const fs = require('fs')
 const Sequelize = require('sequelize')
-const creds = appEnv.getServiceCreds('myClearDB')
+const creds = appEnv.getServiceCreds('mysql-rob')
 
 if(!creds)
 	throw new Error('database credentials not found')
