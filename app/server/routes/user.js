@@ -2,7 +2,7 @@ const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const validator = require('validator')
 const auth = require('../auth')
-const sendgrid = require('../../util/mail')
+const mail = require('../../util/mail')
 
 let User
 require('../../database')
@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
 			return res.status(409).json({error: 'username taken'})
 		}
 
-		sendgrid.sendVerification(user)
+		mail.sendVerification(user)
 		.then(data => {
 			console.log(data)
 		})
