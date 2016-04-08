@@ -69,6 +69,39 @@ router.post('/', (req, res) => {
 	})
 })
 
+router.get('/verify/:token', (req, res) => {
+	const token = req.params.token
+
+	User.findOne({
+		where: {
+			emailToken: token
+		}
+	}).then(user => {
+		if (!user){
+			return res.status(401).send('No user associated with verification')
+		}
+
+		const expires = new Date(user.emailTokenExpires)
+		const now = new Date()
+
+		if (now < expires){
+			return res.status(410).send('This link has expired, request a new link <a href="http://localhost:6001/refresh-verification">here</a>')
+		}
+
+		User.update({
+			verifiedEmail: true,
+			emailToken: null,
+			emailTokenExpires: null
+		}, {
+			where: { id: user.id }
+		}).then(result => {
+			return res.status(200).send('Thank you for verifying')
+		}).catch(err => {
+			return res.status(500).send('Failed to update user')
+		})
+	})
+})
+
 router.post('/login', (req, res) => {
 	const credentials = req.body,
 		username = credentials.username,
