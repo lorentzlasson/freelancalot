@@ -6,7 +6,10 @@ module.exports = {
 		name: Sequelize.STRING,
 		email: Sequelize.STRING,
 		password: Sequelize.STRING,
-		photo: Sequelize.STRING,
+		photo: Sequelize.STRING,	
+		verifiedEmail: Sequelize.BOOLEAN,
+		emailToken: Sequelize.STRING,
+		emailTokenExpires: Sequelize.DATE,
 		permission: {
 			type: Sequelize.STRING,
 			defaultValue: 'admin'

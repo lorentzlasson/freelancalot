@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const validator = require('validator')
 const auth = require('../auth')
 const mail = require('../../util/mail')
+const uuid = require('node-uuid')
 
 let User
 require('../../database')
@@ -44,7 +45,11 @@ router.post('/', (req, res) => {
 			email: credentials.username
 		},
 		defaults: {
-			password: credentials.password
+			password: credentials.password,
+			verifiedEmail: false,
+			emailToken: uuid.v4(),
+			emailTokenExpires: new Date().setDate(new Date().getDate() + 1)
+
 		}
 	})
 	.spread((user, created) => {
