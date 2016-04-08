@@ -69,7 +69,7 @@ router.post('/', (req, res) => {
 	})
 })
 
-router.get('/verify/:token', (req, res) => {
+router.get('/confirm/:token', (req, res) => {
 	const token = req.params.token
 
 	User.findOne({
@@ -84,7 +84,7 @@ router.get('/verify/:token', (req, res) => {
 		const expires = new Date(user.emailTokenExpires)
 		const now = new Date()
 
-		if (now < expires){
+		if (now > expires){
 			return res.status(410).send('This link has expired, request a new link <a href="http://localhost:6001/refresh-verification">here</a>')
 		}
 

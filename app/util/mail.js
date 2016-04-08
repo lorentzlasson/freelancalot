@@ -20,7 +20,7 @@ const sendVerification = user => {
 			from: mailConfig.email,
 			to: user.email,
 			subject: "Verify your email",
-			html: '<h2>Hi!</h2><div><span>Please verify your email <a href="http://localhost:6001/api/user/verify/' + user.emailToken + '">here</a></span></div>'
+			html: '<h2>Hi!</h2><div><span>Please verify your email <a href="http://localhost:6001/api/user/confirm/' + user.emailToken + '">here</a></span></div>'
 		}
 
 		transporter.sendMail(mailOptions, function(err, info){
