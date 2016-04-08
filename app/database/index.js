@@ -26,12 +26,27 @@ const database = {
 
 const sequelize = new Sequelize(creds.name, creds.username, creds.password, options)
 const modelFiles = fs.readdirSync(path.join(__dirname, MODEL_DIR))
+const relations = new Map()
 
+// setup data model
 modelFiles.forEach(name => {
 	const modelPath = path.join(__dirname, MODEL_DIR, name)
 	const object = require(modelPath)
 	const modelName = name.replace(/\.js$/i, '')
 	database.model[modelName] = sequelize.define(modelName, object.model, object.options)
+	relations.set(modelName, object.relations)
+})
+
+// set up model relations
+relations.forEach((modelRelations, modelName) => {
+	const model = database.model[modelName]
+	modelRelations.forEach(relation => {
+		const relationType = relation[0]
+		const targetName = relation[1]
+		const throughOpts = relation[2] // needed only if 'belongsToMany' relation type
+		const target = database.model[targetName]
+		model[relationType](target, throughOpts)
+	})
 })
 
 let initialized = false
