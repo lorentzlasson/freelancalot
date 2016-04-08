@@ -118,7 +118,7 @@ test('login', t => {
 	})
 })
 
-test('GET /hello - unauthenticated', t => {
+test('get /hello - unauthenticated', t => {
 	request(server)
 	.get('/api/user/hello')
 	.expect(401)
