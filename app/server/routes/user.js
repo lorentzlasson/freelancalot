@@ -81,14 +81,14 @@ router.get('/confirm/:token', (req, res) => {
 		}
 	}).then(user => {
 		if (!user){
-			return res.status(401).send('No user associated with verification')
+			return res.status(401).send('no user associated with verification')
 		}
 
 		const expires = new Date(user.emailTokenExpires)
 		const now = new Date()
 
 		if (now > expires){
-			return res.status(410).send('This link has expired, request a new link <a href="http://localhost:6001/refresh-verification">here</a>')
+			return res.status(410).send('this link has expired, request a new link <a href="http://localhost:6001/refresh-verification">here</a>')
 		}
 
 		User.update({
@@ -98,9 +98,9 @@ router.get('/confirm/:token', (req, res) => {
 		}, {
 			where: { id: user.id }
 		}).then(result => {
-			return res.status(200).send('Thank you for verifying')
+			return res.status(200).send('thank you for verifying')
 		}).catch(err => {
-			return res.status(500).send('Failed to update user')
+			return res.status(500).send('failed to update user')
 		})
 	})
 })
