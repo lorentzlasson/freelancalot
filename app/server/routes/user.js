@@ -65,7 +65,10 @@ router.post('/', (req, res) => {
 			console.log(err)
 		})
 
-		return res.json(user)
+		if(!process.env.JWT_SECRET) throw new Error('JWT_SECRET is not set')
+		const token = jwt.sign({email: user.email}, process.env.JWT_SECRET)
+
+		return res.json({token})
 	})
 })
 
