@@ -30,5 +30,11 @@ module.exports = {
 				return bcrypt.compareSync(password, this.password)
 			}
 		}
-	}
+	},
+
+	relations: [
+		['belongsToMany', 'hub', {
+			through: 'userHub'
+		}]
+	]
 }
