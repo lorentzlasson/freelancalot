@@ -97,9 +97,9 @@ router.get('/confirm/:token', (req, res) => {
 			emailTokenExpires: null
 		}, {
 			where: { id: user.id }
-		}).then(result => {
+		}).then(() => {
 			return res.status(200).send('thank you for verifying')
-		}).catch(err => {
+		}).catch(() => {
 			return res.status(500).send('failed to update user')
 		})
 	})
