@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
-const validator = require('validator')
 const auth = require('../auth')
 const mail = require('../../util/mail')
 const uuid = require('node-uuid')
@@ -32,26 +31,17 @@ router.get('/me/photo', auth.ensure, (req, res) => {
 // --------- PUBLIC PATHS -----------
 // register new user
 router.post('/', (req, res) => {
-	const credentials = req.body
-	if (!validator.isEmail(credentials.username)) {
-		return res.status(400).json({error: 'username is not a valid email address'})
+	const creds = req.body
+	const user = {
+		email: creds.username,
+		password: creds.password,
+		verifiedEmail: false,
+		emailToken: uuid.v4(),
+		emailTokenExpires: new Date().setDate(new Date().getDate() + 1)
 	}
-	User.findOrCreate({
-		where: {
-			email: credentials.username
-		},
-		defaults: {
-			password: credentials.password,
-			verifiedEmail: false,
-			emailToken: uuid.v4(),
-			emailTokenExpires: new Date().setDate(new Date().getDate() + 1)
-		}
-	})
-	.spread((user, created) => {
-		if (!created) {
-			return res.status(409).json({error: 'username taken'})
-		}
 
+	User.create(user)
+	.then((user) => {
 		mail.sendVerification(user)
 		.then(data => {
 			console.log(data)
@@ -64,6 +54,9 @@ router.post('/', (req, res) => {
 		const token = jwt.sign({email: user.email}, process.env.JWT_SECRET)
 
 		return res.json({token})
+	})
+	.catch(err => {
+		return res.status(400).send({error: err.message})
 	})
 })
 

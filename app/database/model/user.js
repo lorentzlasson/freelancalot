@@ -4,7 +4,14 @@ const bcrypt = require('bcrypt')
 module.exports = {
 	model: {
 		name: Sequelize.STRING,
-		email: Sequelize.STRING,
+		email: {
+			type: Sequelize.STRING,
+			allowNull: false,
+			unique: true,
+			validate: {
+				isEmail: true
+			}
+		},
 		password: Sequelize.STRING,
 		photo: Sequelize.STRING,	
 		verifiedEmail: Sequelize.BOOLEAN,
