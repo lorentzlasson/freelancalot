@@ -40,13 +40,15 @@ modelFiles.forEach(name => {
 // set up model relations
 relations.forEach((modelRelations, modelName) => {
 	const model = database.model[modelName]
-	modelRelations.forEach(relation => {
-		const relationType = relation[0]
-		const targetName = relation[1]
-		const throughOpts = relation[2] // needed only if 'belongsToMany' relation type
-		const target = database.model[targetName]
-		model[relationType](target, throughOpts)
-	})
+	if(modelRelations){
+		modelRelations.forEach(relation => {
+			const relationType = relation[0]
+			const targetName = relation[1]
+			const throughOpts = relation[2] // needed only if 'belongsToMany' relation type
+			const target = database.model[targetName]
+			model[relationType](target, throughOpts)
+		})
+	}
 })
 
 let initialized = false
