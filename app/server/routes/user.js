@@ -45,7 +45,6 @@ router.post('/', (req, res) => {
 			verifiedEmail: false,
 			emailToken: uuid.v4(),
 			emailTokenExpires: new Date().setDate(new Date().getDate() + 1)
-
 		}
 	})
 	.spread((user, created) => {
