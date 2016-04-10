@@ -11,6 +11,6 @@ module.exports = {
 	},
 
 	relations: [
-		['hasOne', 'hub']
+		['hasMany', 'pitch']
 	]
 }
