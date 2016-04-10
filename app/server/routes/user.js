@@ -11,10 +11,6 @@ require('../../database')
 	User = db.model.user
 })
 
-router.get('/hello', auth.ensure, (req, res) => {
-	res.json({message: 'world'})
-})
-
 router.get('/me', auth.ensure, (req, res) => {
 	const email = req.decoded.email
 	User.findOne({

@@ -118,27 +118,6 @@ test('login', t => {
 	})
 })
 
-test('get /hello - unauthenticated', t => {
-	request(server)
-	.get('/api/user/hello')
-	.expect(401)
-	.end((err) => {
-		t.error(err, 'no error')
-		t.end()
-	})
-})
-
-test('get /hello', t => {
-	request(server)
-	.get('/api/user/hello?token=' + token)
-	.expect(200)
-	.end((err, res) => {
-		t.error(err, 'no error')
-		t.same(res.body.message, 'world', 'response message as expected')
-		t.end()
-	})
-})
-
 test('get /me', t => {
 	request(server)
 	.get('/api/user/me?token=' + token)
