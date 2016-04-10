@@ -42,20 +42,15 @@ router.post('/', (req, res) => {
 
 	User.create(user)
 	.then((user) => {
-		mail.sendVerification(user)
-		.then(data => {
-			console.log(data)
-		})
-		.catch(err => {
-			console.log(err)
-		})
-
+		return mail.sendVerification(user)
+	})
+	.then(() => {
 		if(!process.env.JWT_SECRET) throw new Error('JWT_SECRET is not set')
 		const token = jwt.sign({email: user.email}, process.env.JWT_SECRET)
-
 		return res.json({token})
 	})
 	.catch(err => {
+		console.error(err)
 		return res.status(400).send({error: err.message})
 	})
 })
