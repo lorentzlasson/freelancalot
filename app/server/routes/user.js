@@ -74,17 +74,19 @@ router.get('/confirm/:token', (req, res) => {
 			return res.status(410).send('this link has expired, request a new link <a href="http://localhost:6001/refresh-verification">here</a>')
 		}
 
-		User.update({
+		return User.update({
 			verifiedEmail: true,
 			emailToken: null,
 			emailTokenExpires: null
 		}, {
 			where: { id: user.id }
-		}).then(() => {
-			return res.status(200).send('thank you for verifying')
-		}).catch(() => {
-			return res.status(500).send('failed to update user')
 		})
+	})
+	.then(() => {
+		return res.status(200).send('thank you for verifying')
+	})
+	.catch(() => {
+		return res.status(500).send('failed to update user')
 	})
 })
 
