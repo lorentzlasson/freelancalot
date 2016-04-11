@@ -11,7 +11,9 @@ module.exports = {
 				msg: 'username taken'
 			},
 			validate: {
-				isEmail: true
+				isEmail: {
+					msg: 'username is not a valid email address'
+				}
 			}
 		},
 		password: Sequelize.STRING,
