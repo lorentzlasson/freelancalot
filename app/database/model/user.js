@@ -7,7 +7,9 @@ module.exports = {
 		email: {
 			type: Sequelize.STRING,
 			allowNull: false,
-			unique: true,
+			unique: {
+				msg: 'username taken'
+			},
 			validate: {
 				isEmail: true
 			}
