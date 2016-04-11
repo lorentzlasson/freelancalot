@@ -1,4 +1,4 @@
-module.exports = {
+const pitch = {
 	model: {},
 
 	options: {
@@ -11,3 +11,5 @@ module.exports = {
 		['belongsTo', 'customer']
 	]
 }
+
+module.exports = pitch

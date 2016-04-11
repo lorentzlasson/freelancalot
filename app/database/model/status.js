@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-module.exports = {
+const status = {
 	model: {
 		status: Sequelize.INTEGER,
 		name: Sequelize.STRING
@@ -14,3 +14,5 @@ module.exports = {
 		['hasMany', 'pitch']
 	]
 }
+
+module.exports = status

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-module.exports = {
+const idea = {
 	model: {
 		name: Sequelize.STRING,
 		summary: Sequelize.STRING
@@ -15,3 +15,5 @@ module.exports = {
 		['hasMany', 'pitch']
 	]
 }
+
+module.exports = idea

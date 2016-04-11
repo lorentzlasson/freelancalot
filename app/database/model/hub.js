@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-module.exports = {
+const hub = {
 	model: {
 		name: Sequelize.STRING
 	},
@@ -16,3 +16,5 @@ module.exports = {
 		['hasMany', 'idea']
 	]
 }
+
+module.exports = hub

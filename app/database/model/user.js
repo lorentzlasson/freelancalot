@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const bcrypt = require('bcrypt')
 
-module.exports = {
+const user = {
 	model: {
 		name: Sequelize.STRING,
 		email: {
@@ -49,3 +49,5 @@ module.exports = {
 		}]
 	]
 }
+
+module.exports = user
