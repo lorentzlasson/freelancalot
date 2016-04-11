@@ -16,7 +16,8 @@ router.get('/me', auth.ensure, (req, res) => {
 		where: {
 			email: email
 		}
-	}).then(user => {
+	})
+	.then(user => {
 		if (!user) {
 			return res.status(500).end()
 		}
@@ -62,7 +63,8 @@ router.get('/confirm/:token', (req, res) => {
 		where: {
 			emailToken: token
 		}
-	}).then(user => {
+	})
+	.then(user => {
 		if (!user){
 			return res.status(401).send('no user associated with verification')
 		}
@@ -99,7 +101,8 @@ router.post('/login', (req, res) => {
 		where: {
 			email: username
 		}
-	}).then(user => {
+	})
+	.then(user => {
 		if (!user) {
 			return res.status(401).json({error: 'username does not exist'})
 		}
@@ -112,9 +115,9 @@ router.post('/login', (req, res) => {
 		const token = jwt.sign({email: user.email}, process.env.JWT_SECRET)
 
 		return res.json({token})
-
-	}, err => {
-		return res.status(500).send(err)
+	})
+	.catch(err => {
+		return res.status(500).json(err)
 	})
 })
 
