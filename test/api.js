@@ -22,7 +22,7 @@ test('setup', t => {
 		server = s
 	})
 	.catch(err => {
-		t.error(err, 'should startup without errors')
+		t.notOk(err, 'should startup without errors')
 	})
 	.then(() => {
 		t.end()
@@ -35,7 +35,7 @@ test('register', t => {
 	.send(credentials)
 	.expect(200)
 	.end((err, res) => {
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.ok(res.body, 'user received')
 		t.end()
 	})
@@ -52,7 +52,7 @@ test('register - invalid email', t => {
 	.expect(400)
 	.end((err, res) => {
 		const expectedMsg = 'username is not a valid email address'
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -65,7 +65,7 @@ test('register - existing user', t => {
 	.expect(409)
 	.end((err, res) => {
 		const expectedMsg = 'username taken'
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -82,7 +82,7 @@ test('login - wrong username', t => {
 	.expect(401)
 	.end((err, res) => {
 		const expectedMsg = 'username does not exist'
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -99,7 +99,7 @@ test('login - wrong password', t => {
 	.expect(401)
 	.end((err, res) => {
 		const expectedMsg = 'incorrect password'
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -111,7 +111,7 @@ test('login', t => {
 	.send(credentials)
 	.expect(200)
 	.end((err, res) => {
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.ok(res.body.token, 'received token')
 		token = res.body.token
 		t.end()
@@ -123,7 +123,7 @@ test('get /me', t => {
 	.get('/api/user/me?token=' + token)
 	.expect(200)
 	.end((err, res) => {
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.same(res.body.email, credentials.username, 'username as expected')
 		t.end()
 	})
@@ -134,7 +134,7 @@ test('get /me/photo', t => {
 	.get('/api/user/me/photo?token=' + token)
 	.expect(501)
 	.end((err, res) => {
-		t.error(err, 'no error')
+		t.notOk(err, 'no error')
 		t.same(res.body.photo, 'dummy photo', 'photo as expected')
 		t.end()
 	})
