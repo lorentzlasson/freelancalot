@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const auth = require('../auth')
+const handleError = require('../error-handler')
 const mail = require('../../util/mail')
 const uuid = require('node-uuid')
 
@@ -22,6 +23,10 @@ router.get('/me', auth.ensure, (req, res) => {
 			return res.status(500).end()
 		}
 		return res.json(user)
+	})
+	.catch(err => {
+		const error = handleError(err)
+		return res.status(error.status).json(error.message)
 	})
 })
 
@@ -51,8 +56,8 @@ router.post('/', (req, res) => {
 		return res.json({token})
 	})
 	.catch(err => {
-		console.error(err)
-		return res.status(400).send({error: err.message})
+		const error = handleError(err)
+		return res.status(error.status).json(error.message)
 	})
 })
 
@@ -87,8 +92,9 @@ router.get('/confirm/:token', (req, res) => {
 	.then(() => {
 		return res.status(200).send('thank you for verifying')
 	})
-	.catch(() => {
-		return res.status(500).send('failed to update user')
+	.catch(err => {
+		const error = handleError(err)
+		return res.status(error.status).json(error.message)
 	})
 })
 
@@ -117,7 +123,8 @@ router.post('/login', (req, res) => {
 		return res.json({token})
 	})
 	.catch(err => {
-		return res.status(500).json(err)
+		const error = handleError(err)
+		return res.status(error.status).json(error.message)
 	})
 })
 
