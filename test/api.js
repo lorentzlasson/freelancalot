@@ -42,7 +42,7 @@ test('register', t => {
 })
 
 test('register - invalid email', t => {
-	let invalidCredentials = {
+	const invalidCredentials = {
 		username: 'invalidusername',
 		password: credentials.password
 	}
@@ -51,7 +51,7 @@ test('register - invalid email', t => {
 	.send(invalidCredentials)
 	.expect(400)
 	.end((err, res) => {
-		let expectedMsg = 'username is not a valid email address'
+		const expectedMsg = 'username is not a valid email address'
 		t.error(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
@@ -64,7 +64,7 @@ test('register - existing user', t => {
 	.send(credentials)
 	.expect(409)
 	.end((err, res) => {
-		let expectedMsg = 'username taken'
+		const expectedMsg = 'username taken'
 		t.error(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
@@ -72,7 +72,7 @@ test('register - existing user', t => {
 })
 
 test('login - wrong username', t => {
-	let invalidCredentials = {
+	const invalidCredentials = {
 		username: 'wrongusername',
 		password: credentials.password
 	}
@@ -81,7 +81,7 @@ test('login - wrong username', t => {
 	.send(invalidCredentials)
 	.expect(401)
 	.end((err, res) => {
-		let expectedMsg = 'username does not exist'
+		const expectedMsg = 'username does not exist'
 		t.error(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
@@ -89,7 +89,7 @@ test('login - wrong username', t => {
 })
 
 test('login - wrong password', t => {
-	let invalidCredentials = {
+	const invalidCredentials = {
 		username: credentials.username,
 		password: 'wrongpassword'
 	}
@@ -98,7 +98,7 @@ test('login - wrong password', t => {
 	.send(invalidCredentials)
 	.expect(401)
 	.end((err, res) => {
-		let expectedMsg = 'incorrect password'
+		const expectedMsg = 'incorrect password'
 		t.error(err, 'no error')
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
