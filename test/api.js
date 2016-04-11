@@ -2,6 +2,10 @@ const test = require('tape')
 const request = require('supertest')
 let server, token, credentials
 
+const printError = error => {
+	console.error('ERROR RESPONSE: ', error.body.error)
+}
+
 test('environment', t => {
 	t.ok(process.env.VCAP_SERVICES, 'VCAP_SERVICES')
 	t.ok(process.env.JWT_SECRET, 'JWT_SECRET')
@@ -36,6 +40,7 @@ test('register', t => {
 	.expect(200)
 	.end((err, res) => {
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.ok(res.body, 'user received')
 		t.end()
 	})
@@ -53,6 +58,7 @@ test('register - invalid email', t => {
 	.end((err, res) => {
 		const expectedMsg = 'username is not a valid email address'
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -66,6 +72,7 @@ test('register - existing user', t => {
 	.end((err, res) => {
 		const expectedMsg = 'username taken'
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -83,6 +90,7 @@ test('login - wrong username', t => {
 	.end((err, res) => {
 		const expectedMsg = 'username does not exist'
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -100,6 +108,7 @@ test('login - wrong password', t => {
 	.end((err, res) => {
 		const expectedMsg = 'incorrect password'
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.same(res.body.error, expectedMsg, 'error message as expected')
 		t.end()
 	})
@@ -112,6 +121,7 @@ test('login', t => {
 	.expect(200)
 	.end((err, res) => {
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.ok(res.body.token, 'received token')
 		token = res.body.token
 		t.end()
@@ -124,6 +134,7 @@ test('get /me', t => {
 	.expect(200)
 	.end((err, res) => {
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.same(res.body.email, credentials.username, 'username as expected')
 		t.end()
 	})
@@ -135,6 +146,7 @@ test('get /me/photo', t => {
 	.expect(501)
 	.end((err, res) => {
 		t.notOk(err, 'no error')
+		if(err) printError(res)
 		t.same(res.body.photo, 'dummy photo', 'photo as expected')
 		t.end()
 	})
