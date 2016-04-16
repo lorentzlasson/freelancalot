@@ -16,7 +16,16 @@ const user = {
 				}
 			}
 		},
-		password: Sequelize.STRING,
+		password: {
+			type: Sequelize.VIRTUAL,
+			validate: {
+				is: {
+					args: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{6,20}$/,
+					msg: 'password is invalid'
+				}
+			}
+		},
+		password_hash: Sequelize.STRING,
 		photo: Sequelize.STRING,	
 		verifiedEmail: Sequelize.BOOLEAN,
 		emailToken: Sequelize.STRING,
@@ -31,14 +40,18 @@ const user = {
 		freezeTableName: true,
 		setterMethods: {
 			password: function(value) {
+				this.setDataValue('password', value)
+				this.password_hash = value
+			},
+			password_hash: function(value) {
 				const salt = bcrypt.genSaltSync()
 				const hash = bcrypt.hashSync(value, salt)
-				this.setDataValue('password', hash)
+				this.setDataValue('password_hash', hash)
 			}
 		},
 		instanceMethods: {
 			validPassword: function(password) {
-				return bcrypt.compareSync(password, this.password)
+				return bcrypt.compareSync(password, this.password_hash)
 			}
 		}
 	},

@@ -64,6 +64,24 @@ test('register - invalid email', t => {
 	})
 })
 
+test('register - invalid password', t => {
+	const invalidCredentials = {
+		username: credentials.username,
+		password: 'qwe'
+	}
+	request(server)
+	.post('/api/user')
+	.send(invalidCredentials)
+	.expect(400)
+	.end((err, res) => {
+		const expectedMsg = 'password is invalid'
+		t.notOk(err, 'no error')
+		if(err) printError(res)
+		t.same(res.body.error, expectedMsg, 'error message as expected')
+		t.end()
+	})
+})
+
 test('register - existing user', t => {
 	request(server)
 	.post('/api/user')
