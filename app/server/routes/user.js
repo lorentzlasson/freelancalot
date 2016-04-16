@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const auth = require('../auth')
-const handleError = require('../error-handler')
 const mail = require('../../util/mail')
 const uuid = require('node-uuid')
 
@@ -11,7 +10,7 @@ require('../../database')
 	User = db.model.user
 })
 
-router.get('/me', auth.ensure, (req, res) => {
+router.get('/me', auth.ensure, (req, res, next) => {
 	const email = req.decoded.email
 	User.findOne({
 		where: {
@@ -25,8 +24,7 @@ router.get('/me', auth.ensure, (req, res) => {
 		return res.json(user)
 	})
 	.catch(err => {
-		const error = handleError(err)
-		return res.status(error.status).json(error.message)
+		return next(err)
 	})
 })
 
@@ -36,7 +34,7 @@ router.get('/me/photo', auth.ensure, (req, res) => {
 
 // --------- PUBLIC PATHS -----------
 // register new user
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
 	const creds = req.body
 	const user = {
 		email: creds.username,
@@ -56,12 +54,11 @@ router.post('/', (req, res) => {
 		return res.json({token})
 	})
 	.catch(err => {
-		const error = handleError(err)
-		return res.status(error.status).json(error.message)
+		return next(err)
 	})
 })
 
-router.get('/confirm/:token', (req, res) => {
+router.get('/confirm/:token', (req, res, next) => {
 	const token = req.params.token
 
 	User.findOne({
@@ -93,12 +90,11 @@ router.get('/confirm/:token', (req, res) => {
 		return res.status(200).send('thank you for verifying')
 	})
 	.catch(err => {
-		const error = handleError(err)
-		return res.status(error.status).json(error.message)
+		return next(err)
 	})
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
 	const credentials = req.body,
 		username = credentials.username,
 		password = credentials.password
@@ -123,8 +119,7 @@ router.post('/login', (req, res) => {
 		return res.json({token})
 	})
 	.catch(err => {
-		const error = handleError(err)
-		return res.status(error.status).json(error.message)
+		return next(err)
 	})
 })
 

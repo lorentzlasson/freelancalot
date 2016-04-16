@@ -31,4 +31,11 @@ const handle = error => {
 	return { status, message }
 }
 
-module.exports = handle
+/* eslint-disable no-unused-vars */
+const handler = (err, req, res, next) => {
+	const error = handle(err)
+	return res.status(error.status).json(error.message)
+}
+/* eslint-enable */
+
+module.exports = handler
