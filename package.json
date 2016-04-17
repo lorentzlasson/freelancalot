@@ -2,9 +2,9 @@
   "name": "freelancalot",
   "version": "0.0.1",
   "description": "freelancing collaboration tool",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
-    "start": "node --use_strict app",
+    "start": "node --use_strict .",
     "test": "node --use_strict test"
   },
   "keywords": [
