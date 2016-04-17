@@ -5,7 +5,8 @@
   "main": "app/index.js",
   "scripts": {
     "start": "node --use_strict .",
-    "test": "node --use_strict test"
+    "test": "node --use_strict test",
+	"debug": "node --debug-brk --use_strict ."
   },
   "keywords": [
     "freelancing"
