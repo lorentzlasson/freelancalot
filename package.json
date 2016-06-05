@@ -18,7 +18,7 @@
     "url": "https://github.com/lorentzlasson/freelancalot.git"
   },
   "dependencies": {
-    "bcrypt": "^0.8.5",
+    "bcrypt": "^0.8.6",
     "body-parser": "^1.14.1",
     "cfenv": "^1.0.3",
     "express": "^4.13.3",
