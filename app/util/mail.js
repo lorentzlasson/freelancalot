@@ -23,12 +23,9 @@ const sendVerification = user => {
 			html: '<h2>Hi!</h2><div><span>Please verify your email <a href="http://localhost:6001/api/user/confirm/' + user.emailToken + '">here</a></span></div>'
 		}
 
-		transporter.sendMail(mailOptions, function(err, info){
-			if (err){
-				return reject(err)
-			} else {
-				return resolve(info)
-			}
+		transporter.sendMail(mailOptions, (err, info) =>{
+			if (err) return reject(err)
+			return resolve(info)
 		})
 	})
 }
