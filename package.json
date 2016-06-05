@@ -4,9 +4,9 @@
   "description": "freelancing collaboration tool",
   "main": "app/index.js",
   "scripts": {
-    "start": "node --use_strict .",
-    "test": "node --use_strict test",
-	"debug": "node --debug-brk --use_strict ."
+    "start": "node .",
+    "test": "node test",
+    "debug": "node --debug-brk ."
   },
   "keywords": [
     "freelancing"
