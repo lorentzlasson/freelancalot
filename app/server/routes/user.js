@@ -18,9 +18,7 @@ router.get('/me', auth.ensure, (req, res, next) => {
 		}
 	})
 	.then(user => {
-		if (!user) {
-			return res.status(500).end()
-		}
+		if (!user) return res.status(500).end()
 		return res.json(user)
 	})
 	.catch(err => {
